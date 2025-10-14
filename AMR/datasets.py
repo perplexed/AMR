@@ -2,10 +2,11 @@ import os
 import sys
 import pandas as pd
 import importlib.metadata as metadata
+from pathlib import Path, PurePath
 
 # Get the path to the virtual environment
-venv_path = sys.prefix
-r_lib_path = os.path.join(venv_path, "R_libs")
+venv_path = PurePath(sys.prefix)
+r_lib_path = venv_path / "R_libs"
 os.makedirs(r_lib_path, exist_ok=True)
 
 # Set environment variable before importing rpy2
@@ -37,7 +38,7 @@ except metadata.PackageNotFoundError:
     python_amr_version = str('')
 
 # Retrieve R AMR version
-r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path}"))')
+r_amr_version = robjects.r(f'as.character(packageVersion("AMR", lib.loc = "{r_lib_path.as_posix()}"))')
 r_amr_version = str(r_amr_version[0])
 
 # Compare R and Python package versions
