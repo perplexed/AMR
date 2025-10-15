@@ -10,7 +10,7 @@ r_lib_path = venv_path / "R_libs"
 os.makedirs(r_lib_path, exist_ok=True)
 
 # Set environment variable before importing rpy2
-os.environ['R_LIBS_SITE'] = r_lib_path
+os.environ['R_LIBS_SITE'] = str(r_lib_path)
 
 from rpy2 import robjects
 from rpy2.robjects.conversion import localconverter
